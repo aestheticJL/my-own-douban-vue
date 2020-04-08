@@ -55,7 +55,7 @@
 
 <script>
     export default {
-        name: "addMovie",
+        name: "AddMovie",
         data() {
             return {
                 newId: '',

@@ -2,8 +2,8 @@
     <div>
         <el-container>
             <el-header class="nav">
-                <h1 class="myMovie" @click="goToMovie">我的豆瓣电影</h1>
-                <el-input class="inputId" placeholder="请输入作品Id" v-model="newId">
+                <h1 class="myMovie" @click="goToMovie">搜索豆瓣电影</h1>
+                <el-input class="inputId" placeholder="请输入作品Id" v-model="newId" @keydown.enter.native="getInformation">
                     <el-button slot="append" icon="el-icon-search" @click="getInformation"/>
                 </el-input>
             </el-header>
@@ -26,11 +26,10 @@
                         <div class="grid-content bg-purple-light information">
                             <span class="p1" v-if="directorsStr">导演: </span>{{directorsStr}}<br>
                             <span class="p1" v-if="writerName">编剧: </span>{{writerName}}<br>
-                            <span class="p1" v-if="newWorks.languages">语言: </span>{{newWorks.languages}}<br>
-                            <span class="p1" v-if="newWorks.pubdates">上映日期: </span>{{newWorks.pubdates}}<br>
-                            <span class="p1" v-if="newWorks.durations">片长: </span>{{newWorks.durations}}<br>
-                            <span class="p1" v-if="genresStr">类型: </span>{{genresStr}}<br>
-                            <span class="p1" v-if="castsStr">演员: </span>{{castsStr}}<br>
+                            <span class="p1" v-if="newWorks.languages">语言: </span>{{newWorks.language}}<br>
+                            <span class="p1" v-if="newWorks.pubDate">上映日期: </span>{{newWorks.pubDate}}<br>
+                            <span class="p1" v-if="newWorks.duration">片长: </span>{{newWorks.duration}}<br>
+                            <span class="p1" v-if="actorStr">演员: </span>{{actorStr}}<br>
                             <span class="p1" v-if="newWorks.countries">制片国家/地区: </span>{{newWorks.countries}}<br>
                         </div>
                     </el-col>
@@ -49,6 +48,9 @@
                     </el-col>
                 </el-row>
             </el-main>
+            <div class="buttonGroup" v-if="isShow">
+                <el-button type="primary" size="big" @click="addMovieInf">录入该影片</el-button>
+            </div>
         </el-container>
     </div>
 </template>
@@ -60,28 +62,24 @@
             return {
                 newId: '',
                 isShow: false,
-                getInf: [],
-                newWorks: [
-                    {
-                        title: '',
-                        year: '',
-                        image: '',
-                        score: '',
-                        directors: '',
-                        languages: '',
-                        writer: [],
-                        pubdates: '',
-                        tags: [],
-                        durations: '',
-                        genres: [],
-                        casts: [],
-                        countries: '',
-                    }
-                ],
+                getInf: {},
+                newWorks: {
+                    id: '',
+                    title: '',
+                    year: '',
+                    image: '',
+                    score: '',
+                    language: '',
+                    pubDate: '',
+                    duration: '',
+                    countries: '',
+                    directors: [],
+                    writers: [],
+                    actors: [],
+                },
                 directorsStr: '',
                 writerName: '',
-                genresStr: '',
-                castsStr: '',
+                actorStr: '',
             }
         },
         methods: {
@@ -90,52 +88,69 @@
             },
             getInformation() {
                 this.isShow = false;
-                this.newWorks = [];
+                this.newWorks = {};
                 this.directorsStr = '';
                 this.writerName = '';
-                this.genresStr = '';
-                this.castsStr = '';
+                this.actorStr = '';
                 this.getRequest("/testGetApi/" + this.newId).then(resp => {
                     if (resp) {
                         this.getInf = resp;
+                        this.newWorks.directors = [];
+                        this.newWorks.writers = [];
+                        this.newWorks.actors = [];
                         let thisWorks = this.newWorks;
                         let getWorks = this.getInf;
+                        thisWorks.id = this.newId;
                         thisWorks.title = getWorks.original_title;
                         thisWorks.year = getWorks.year;
                         thisWorks.image = getWorks.images.small;
                         thisWorks.score = getWorks.rating.average;
-                        thisWorks.languages = getWorks.languages[0];
+                        thisWorks.language = getWorks.languages[0];
+                        thisWorks.pubDate = getWorks.pubdates[0];
+                        thisWorks.duration = getWorks.durations[0];
+                        thisWorks.countries = getWorks.countries[0];
 
-                        thisWorks.writers = getWorks.writers;
                         if (getWorks.writers) {
-                            getWorks.writers.forEach(w => {
+                            getWorks.writers.forEach((w, index) => {
+                                thisWorks.writers.push({
+                                    id: '',
+                                    image: '',
+                                    name: '',
+                                });
+                                thisWorks.writers[index].id = w.id;
+                                thisWorks.writers[index].image = w.avatars.small;
+                                thisWorks.writers[index].name = w.name;
                                 this.writerName += w.name + "/";
                             });
                             this.writerName = this.writerName.substring(0, this.writerName.length - 1);
                         }
-                        thisWorks.pubdates = getWorks.pubdates[0];
-                        thisWorks.tags = getWorks.tags;
-                        thisWorks.durations = getWorks.durations[0];
-                        thisWorks.genres = getWorks.genres;
-                        if (getWorks.genres) {
-                            getWorks.genres.forEach(g => {
-                                this.genresStr += g + "/";
-                            });
-                            this.genresStr = this.genresStr.substring(0, this.genresStr.length - 1);
-                        }
-                        thisWorks.casts = getWorks.casts;
-                        if (getWorks.casts) {
-                            getWorks.casts.forEach(c => {
-                                this.castsStr += c.name + "/";
-                            });
-                            this.castsStr = this.castsStr.substring(0, this.castsStr.length - 1);
-                        }
-                        thisWorks.countries = getWorks.countries[0];
 
-                        thisWorks.directors = getWorks.directors;
+                        if (getWorks.casts) {
+                            getWorks.casts.forEach((c, index) => {
+                                thisWorks.actors.push({
+                                    id: '',
+                                    image: '',
+                                    name: '',
+                                });
+                                thisWorks.actors[index].id = c.id;
+                                thisWorks.actors[index].image = c.avatars.small;
+                                thisWorks.actors[index].name = c.name;
+                                this.actorStr += c.name + "/";
+                            });
+                            this.actorStr = this.actorStr.substring(0, this.actorStr.length - 1);
+                        }
+
                         if (getWorks.directors) {
-                            getWorks.directors.forEach(c => {
-                                this.directorsStr += c.name + "/";
+                            getWorks.directors.forEach((d, index) => {
+                                thisWorks.directors.push({
+                                    id: '',
+                                    image: '',
+                                    name: '',
+                                });
+                                thisWorks.directors[index].id = d.id;
+                                thisWorks.directors[index].image = d.avatars.small;
+                                thisWorks.directors[index].name = d.name;
+                                this.directorsStr += d.name + "/";
                             });
                             this.directorsStr = this.directorsStr.substring(0, this.directorsStr.length - 1);
                         }
@@ -143,7 +158,20 @@
                         this.isShow = true;
                     }
                 })
-            }
+            },
+            addMovieInf() {
+                console.log(this.newWorks);
+                this.postRequest("/admin/addMovie/", this.newWorks).then(resp => {
+                    console.log(resp);
+                    if (resp) {
+                        this.isShow = false;
+                        this.newWorks = [];
+                        this.directorsStr = '';
+                        this.writerName = '';
+                        this.actorStr = '';
+                    }
+                })
+            },
         }
 
     }
@@ -151,26 +179,26 @@
 
 <style>
     .nav {
-        margin-top: 20px;
+        margin: auto;
         display: flex;
         justify-content: center;
         width: 60%;
     }
 
     .myMovie {
+        margin: 20px auto;
         color: cornflowerblue;
         width: 200px;
     }
 
     .inputId {
-        margin-top: 22px;
+        margin: 20px auto;
         width: 600px;
     }
 
     .InfBox {
-        margin: 0 auto;
-        display: flex;
-        justify-content: center;
+        background: #e0e3e5;
+        margin: 20px auto;
         width: 70%;
     }
 
@@ -194,14 +222,21 @@
         justify-content: center;
         width: 135px;
     }
-    .information{
+
+    .information {
         font-size: 13px;
     }
-    .information span{
+
+    .information span {
         font-size: 16px;
         color: darkgray;
     }
-    .score{
+
+    .score {
         margin-left: 20px;
+    }
+
+    .buttonGroup {
+        margin: 20px auto;
     }
 </style>

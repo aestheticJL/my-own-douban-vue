@@ -4,6 +4,7 @@ import AddMovie from "../components/adminCom/AddMovie";
 import WorksMana from "../components/adminCom/WorksMana";
 import WriteComment from "../components/adminCom/WriteComment";
 import Admin from "../views/adminVue/Admin";
+import AdminBasic from "../components/adminCom/AdminBasic";
 
 Vue.use(VueRouter);
 
@@ -13,6 +14,11 @@ const routes = [
         name: 'Admin',
         component: Admin,
         children: [
+            {
+                path: '/AdminBasic',
+                name: 'AdminBasic',
+                component: AdminBasic,
+            },
             {
                 path: '/AddMovie',
                 name: 'AddMovie',

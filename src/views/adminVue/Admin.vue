@@ -5,24 +5,16 @@
                 <el-menu
                         :default-active="activeIndex"
                         class="el-menu-demo"
-                        mode="horizontal">
-                    <el-menu-item>
+                        mode="horizontal"
+                        router>
+                    <el-menu-item index="/Admin" style="margin-right: 100px">
                         <h1 class="sign">后台管理系统</h1>
                     </el-menu-item>
-                    <el-menu-item index="1">
-                        <router-link to="/AddMovie">
-                            录入电影
-                        </router-link>
+                    <el-menu-item index="/AddMovie">
+                        录入电影
                     </el-menu-item>
-                    <el-menu-item index="2">
-                        <router-link to="/WorksMana">
-                            管理作品
-                        </router-link>
-                    </el-menu-item>
-                    <el-menu-item index="3">
-                        <router-link to="/WriteComment">
-                            编写评论
-                        </router-link>
+                    <el-menu-item index="/WorksMana">
+                        管理作品
                     </el-menu-item>
                 </el-menu>
             </el-header>
@@ -38,9 +30,9 @@
         name: "Nav",
         data() {
             return {
-                activeIndex: '1'
+                activeIndex:'/Admin'
             }
-        }
+        },
     }
 </script>
 
@@ -49,6 +41,5 @@
         text-align: center;
         line-height: normal;
         color: #b9d8ff;
-        margin-right: 50px;
     }
 </style>

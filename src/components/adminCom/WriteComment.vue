@@ -1,6 +1,9 @@
 <template>
     <div>
         编写评论
+        <div id="main">
+            <mavon-editor v-model="value"/>
+        </div>
     </div>
 </template>
 

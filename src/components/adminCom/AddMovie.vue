@@ -161,7 +161,7 @@
             },
             addMovieInf() {
                 console.log(this.newWorks);
-                this.postRequest("/admin/addMovie/", this.newWorks).then(resp => {
+                this.postRequest("/admin/movie/", this.newWorks).then(resp => {
                     console.log(resp);
                     if (resp) {
                         this.isShow = false;

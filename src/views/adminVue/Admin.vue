@@ -3,7 +3,6 @@
         <el-container>
             <el-header>
                 <el-menu
-                        :default-active="activeIndex"
                         class="el-menu-demo"
                         mode="horizontal"
                         router>
@@ -30,7 +29,6 @@
         name: "Nav",
         data() {
             return {
-                activeIndex:'/Admin'
             }
         },
     }

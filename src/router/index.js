@@ -23,12 +23,12 @@ const routes = [
                 name: 'WorksMana',
                 component: WorksMana,
             },
-            {
-                path: '/WriteComment',
-                name: 'WriteComment',
-                component: WriteComment,
-            },
         ]
+    },
+    {
+        path: '/WriteComment/:id/',
+        name: 'WriteComment',
+        component: WriteComment,
     },
 ];
 

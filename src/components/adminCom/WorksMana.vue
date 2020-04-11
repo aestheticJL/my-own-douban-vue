@@ -7,12 +7,12 @@
                     <div style="padding: 14px;">
                         <span>{{movie.title}}</span>
                         <div>
-                            <time class="time">{{movie.name}}</time>
+                            <time class="time">({{movie.year}})</time>
                         </div>
                     </div>
                     <div style="position:absolute;padding: 14px;bottom: 10px">
-                        <el-button type="primary" size="mini">新增评论</el-button>
-                        <el-button type="danger" size="mini" style="margin-left: 22px">删除影片</el-button>
+                        <el-button type="primary" size="mini" @click="addComment(movie.id)">新增评论</el-button>
+                        <el-button type="danger" size="mini" style="margin-left: 22px" @click="deleteMovie(movie.id)">删除影片</el-button>
                     </div>
                 </el-card>
             </el-col>
@@ -33,9 +33,19 @@
         },
         methods: {
             initMovie() {
-                this.getRequest("/admin/movieMana/").then(resp => {
+                this.getRequest("/admin/movie/").then(resp => {
                     if (resp) {
                         this.movies = resp;
+                    }
+                })
+            },
+            addComment(id) {
+                this.$router.push("/WriteComment/" + id);
+            },
+            deleteMovie(id) {
+                this.deleteRequest("/admin/movie/" + id).then(resp => {
+                    if (resp) {
+                        this.initMovie();
                     }
                 })
             }

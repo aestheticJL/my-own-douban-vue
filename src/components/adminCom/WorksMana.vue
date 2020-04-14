@@ -10,9 +10,11 @@
                             <time class="time">({{movie.year}})</time>
                         </div>
                     </div>
-                    <div style="position:absolute;padding: 14px;bottom: 10px">
+                    <div style="position:absolute;padding: 14px; bottom: 10px">
                         <el-button type="primary" size="mini" @click="addComment(movie.id)">新增评论</el-button>
-                        <el-button type="danger" size="mini" style="margin-left: 22px" @click="deleteMovie(movie.id)">删除影片</el-button>
+                        <el-button type="danger" size="mini" style="margin-left: 22px" @click="deleteMovie(movie.id)">
+                            删除影片
+                        </el-button>
                     </div>
                 </el-card>
             </el-col>
@@ -58,6 +60,7 @@
         width: 250px;
         height: 470px;
         margin-right: 10px;
+        position:relative;
     }
 
     .image {

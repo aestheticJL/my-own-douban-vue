@@ -18,15 +18,15 @@
                     <el-col :span="4">
                         <div class="grid-content bg-purple">
                             <div>
-                                <el-image :src="newWorks.image" class="worksImg"/>
+                                <img :src="newWorks.image" class="worksImg" alt="电影海报">
                             </div>
                         </div>
                     </el-col>
                     <el-col :span="6">
                         <div class="grid-content bg-purple-light information">
                             <span class="p1" v-if="directorsStr">导演: </span>{{directorsStr}}<br>
-                            <span class="p1" v-if="writerName">编剧: </span>{{writerName}}<br>
-                            <span class="p1" v-if="newWorks.languages">语言: </span>{{newWorks.language}}<br>
+                            <span class="p1" v-if="writerStr">编剧: </span>{{writerStr}}<br>
+                            <span class="p1" v-if="newWorks.language">语言: </span>{{newWorks.language}}<br>
                             <span class="p1" v-if="newWorks.pubDate">上映日期: </span>{{newWorks.pubDate}}<br>
                             <span class="p1" v-if="newWorks.duration">片长: </span>{{newWorks.duration}}<br>
                             <span class="p1" v-if="actorStr">演员: </span>{{actorStr}}<br>
@@ -68,7 +68,7 @@
                     title: '',
                     year: '',
                     image: '',
-                    score: '',
+                    score: 0,
                     language: '',
                     pubDate: '',
                     duration: '',
@@ -78,7 +78,7 @@
                     actors: [],
                 },
                 directorsStr: '',
-                writerName: '',
+                writerStr: '',
                 actorStr: '',
             }
         },
@@ -90,7 +90,7 @@
                 this.isShow = false;
                 this.newWorks = {};
                 this.directorsStr = '';
-                this.writerName = '';
+                this.writerStr = '';
                 this.actorStr = '';
                 this.getRequest("/testGetApi/" + this.newId).then(resp => {
                     if (resp) {
@@ -120,9 +120,9 @@
                                 thisWorks.writers[index].id = w.id;
                                 thisWorks.writers[index].image = w.avatars.small;
                                 thisWorks.writers[index].name = w.name;
-                                this.writerName += w.name + "/";
+                                this.writerStr += w.name + "/";
                             });
-                            this.writerName = this.writerName.substring(0, this.writerName.length - 1);
+                            this.writerStr = this.writerStr.substring(0, this.writerStr.length - 1);
                         }
 
                         if (getWorks.casts) {
@@ -167,7 +167,7 @@
                         this.isShow = false;
                         this.newWorks = [];
                         this.directorsStr = '';
-                        this.writerName = '';
+                        this.writerStr = '';
                         this.actorStr = '';
                     }
                 })
@@ -189,6 +189,7 @@
         margin: 20px auto;
         color: cornflowerblue;
         width: 200px;
+        cursor:pointer;
     }
 
     .inputId {

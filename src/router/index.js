@@ -3,11 +3,18 @@ import VueRouter from 'vue-router'
 import AddMovie from "../components/adminCom/AddMovie";
 import WorksMana from "../components/adminCom/WorksMana";
 import WriteComment from "../components/adminCom/WriteComment";
-import Admin from "../views/adminVue/Admin";
+import Admin from "../views/Admin";
+import Home from "../views/Home";
+import Movie from "../views/Movie";
 
 Vue.use(VueRouter);
 
 const routes = [
+    {
+        path: '/Home',
+        name: 'Home',
+        component: Home,
+    },
     {
         path: '/admin',
         name: 'Admin',
@@ -29,6 +36,11 @@ const routes = [
         path: '/WriteComment/:id/',
         name: 'WriteComment',
         component: WriteComment,
+    },
+    {
+        path: '/Movie/:id/',
+        name: 'Movie',
+        component: Movie,
     },
 ];
 

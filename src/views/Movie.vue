@@ -77,9 +77,10 @@
                             </div>
                         </el-col>
                     </el-row>
-                    <h2 style="color: #007722;font:16px Arial, Helvetica, sans-serif;">{{movie.title}}的评论· · · · · ·</h2>
-                    {{comment.commentTitle}}
-                    <div v-text="comment.content"></div>
+                    <h2 style="color: #007722;font:16px Arial, Helvetica, sans-serif;">{{movie.title}}的评论· · · · ·
+                        ·</h2>
+                    <span>{{comment.commentTitle}}</span>
+                    <div class="expansion">{{comment.content}}</div>
                 </div>
             </el-main>
         </el-container>
@@ -98,6 +99,7 @@
                 directorsStr: '',
                 writerStr: '',
                 comment: {},
+                active: 1
             }
         },
         mounted() {
@@ -153,7 +155,7 @@
                 });
             },
             goToHome() {
-                this.$router.replace("/Home")
+                this.$router.replace("/")
             },
             unique(arr) { // 根据唯一标识no来对数组进行过滤
                 const res = new Map();  //定义常量 res,值为一个Map对象实例
@@ -191,5 +193,14 @@
     .CACImage {
         width: 95px;
         height: 133px;
+    }
+
+    .expansion {
+        white-space: pre-line;
+        width: 10.3rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
     }
 </style>

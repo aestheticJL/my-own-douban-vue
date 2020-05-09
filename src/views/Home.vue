@@ -55,7 +55,10 @@
 
             },
             goToHome(){
-                this.$router.replace("/Home")
+                if (this.$route.path === "/"){
+                    location.reload();
+                }
+                this.$router.push("/")
             },
         }
     }
@@ -73,6 +76,7 @@
     }
 
     .HomeBox {
+        user-select: none;
         margin: auto;
         width: 765px;
     }

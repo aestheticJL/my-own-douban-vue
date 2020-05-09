@@ -59,7 +59,8 @@
     .movieCard {
         width: 250px;
         height: 470px;
-        margin-right: 10px;
+        margin-left: 33px;
+        margin-bottom: 20px;
         position:relative;
     }
 

@@ -20,10 +20,10 @@
             }
         },
         mounted() {
-            this.initChineseMovie();
+            this.initMovie();
         },
         methods: {
-            initChineseMovie() {
+            initMovie() {
                 this.getRequest("/home/movie/中国").then(resp => {
                     if (resp) {
                         this.chineseMovie = resp;

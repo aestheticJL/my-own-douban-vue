@@ -186,6 +186,7 @@
     }
 
     .myMovie {
+        user-select: none;
         margin: 20px auto;
         color: cornflowerblue;
         width: 200px;

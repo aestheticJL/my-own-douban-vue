@@ -8,6 +8,7 @@
                 </div>
             </el-col>
         </el-row>
+        <span class="more">更多>></span>
     </div>
 </template>
 
@@ -30,7 +31,7 @@
                     }
                 })
             },
-            goToMovie(id){
+            goToMovie(id) {
                 this.$router.push("/movie/" + id);
             }
         }
@@ -38,9 +39,14 @@
 </script>
 
 <style>
+    .more {
+        float: right;
+        font-size: 13px;
+        color: #37a;
+    }
     .HomeMovieCard {
         width: 115px;
-        height: 280px;
+        height: 240px;
         margin-right: 30px;
         cursor: pointer;
     }

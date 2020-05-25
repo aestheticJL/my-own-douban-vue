@@ -42,7 +42,7 @@
                 })
             },
             addComment(id) {
-                this.$router.push("/WriteComment/" + id);
+                this.$router.push("/admin/WriteComment/" + id);
             },
             deleteMovie(id) {
                 this.deleteRequest("/admin/movie/" + id).then(resp => {

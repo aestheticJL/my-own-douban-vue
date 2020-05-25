@@ -92,7 +92,7 @@
                 this.directorsStr = '';
                 this.writerStr = '';
                 this.actorStr = '';
-                this.getRequest("/testGetApi/" + this.newId).then(resp => {
+                this.getRequest("/admin/getMovie/" + this.newId).then(resp => {
                     if (resp) {
                         this.getInf = resp;
                         this.newWorks.directors = [];
@@ -173,7 +173,6 @@
                 })
             },
         }
-
     }
 </script>
 

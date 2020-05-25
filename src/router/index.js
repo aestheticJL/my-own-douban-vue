@@ -6,6 +6,7 @@ import WriteComment from "../components/adminCom/WriteComment";
 import Admin from "../views/Admin";
 import Home from "../views/Home";
 import Movie from "../views/Movie";
+import Login from "../views/Login";
 
 Vue.use(VueRouter);
 
@@ -16,24 +17,29 @@ const routes = [
         component: Home,
     },
     {
+        path: '/login',
+        name: 'Login',
+        component: Login,
+    },
+    {
         path: '/admin',
         name: 'Admin',
         component: Admin,
         children: [
             {
-                path: '/AddMovie',
+                path: '/admin/AddMovie',
                 name: 'AddMovie',
                 component: AddMovie,
             },
             {
-                path: '/WorksMana',
+                path: '/admin/WorksMana',
                 name: 'WorksMana',
                 component: WorksMana,
             },
         ]
     },
     {
-        path: '/WriteComment/:id/',
+        path: '/admin/WriteComment/:id/',
         name: 'WriteComment',
         component: WriteComment,
     },

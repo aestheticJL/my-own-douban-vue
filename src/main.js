@@ -21,11 +21,23 @@ Vue.prototype.deleteRequest = deleteRequest;
 
 Vue.config.productionTip = false;
 
-Vue.use(ElementUI,{size:'small'});
+Vue.use(ElementUI, {size: 'small'});
 Vue.use(mavonEditor);
 
+router.beforeEach((to, from, next) => {
+    if (to.path.startsWith('/admin')) {
+        if (window.sessionStorage.getItem("user")){
+            next();
+        }else {
+        next('/login');
+        }
+    } else {
+        next();
+    }
+});
+
 new Vue({
-  router,
-  store,
-  render: h => h(App)
+    router,
+    store,
+    render: h => h(App)
 }).$mount('#app');

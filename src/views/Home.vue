@@ -8,17 +8,32 @@
                               @keydown.enter.native="getInformation">
                         <el-button slot="append" icon="el-icon-search" @click="getInformation"/>
                     </el-input>
+                    <h1 class="myAdmin" @click="goToAdmin">管理系统</h1>
                 </div>
             </el-header>
             <el-main class="HomeBox">
                 <el-tabs v-model="activeName">
-                    <el-tab-pane label="最近更新" name="New"><New/></el-tab-pane>
-                    <el-tab-pane label="豆瓣高分" name="HighScore"><HighScore/></el-tab-pane>
-                    <el-tab-pane label="近期推荐" name="MyHighScore"><MyHighScore/></el-tab-pane>
-                    <el-tab-pane label="华语" name="Chinese"><Chinese/></el-tab-pane>
-                    <el-tab-pane label="日本" name="Japanese"><Japanese/></el-tab-pane>
-                    <el-tab-pane label="韩国" name="Korean"><Korean/></el-tab-pane>
-                    <el-tab-pane label="其他" name="Others"><Others/></el-tab-pane>
+                    <el-tab-pane label="最近更新" name="New">
+                        <New/>
+                    </el-tab-pane>
+                    <el-tab-pane label="豆瓣高分" name="HighScore">
+                        <HighScore/>
+                    </el-tab-pane>
+                    <el-tab-pane label="近期推荐" name="MyHighScore">
+                        <MyHighScore/>
+                    </el-tab-pane>
+                    <el-tab-pane label="华语" name="Chinese">
+                        <Chinese/>
+                    </el-tab-pane>
+                    <el-tab-pane label="日本" name="Japanese">
+                        <Japanese/>
+                    </el-tab-pane>
+                    <el-tab-pane label="韩国" name="Korean">
+                        <Korean/>
+                    </el-tab-pane>
+                    <el-tab-pane label="其他" name="Others">
+                        <Others/>
+                    </el-tab-pane>
                 </el-tabs>
             </el-main>
         </el-container>
@@ -33,15 +48,17 @@
     import MyHighScore from "../components/homeCom/MyHighScore";
     import New from "../components/homeCom/New";
     import Others from "../components/homeCom/Others";
+
     export default {
         name: 'Home',
         data() {
             return {
                 searchInput: '',
-                activeName:'New'
+                activeName: 'New',
+                user: JSON.parse(window.sessionStorage.getItem("user")),
             }
         },
-        components:{
+        components: {
             Chinese,
             HighScore,
             Japanese,
@@ -54,11 +71,14 @@
             getInformation() {
 
             },
-            goToHome(){
-                if (this.$route.path === "/"){
+            goToHome() {
+                if (this.$route.path === "/") {
                     location.reload();
                 }
                 this.$router.push("/")
+            },
+            goToAdmin() {
+                this.$router.push("/admin");
             },
         }
     }
@@ -72,12 +92,20 @@
     }
 
     .HomeInput {
-        margin: auto;
+        margin-top: 22px;
     }
 
     .HomeBox {
         user-select: none;
         margin: auto;
         width: 765px;
+    }
+
+    .myAdmin {
+        user-select: none;
+        margin: auto 20px;
+        color: cornflowerblue;
+        width: 200px;
+        cursor:pointer;
     }
 </style>

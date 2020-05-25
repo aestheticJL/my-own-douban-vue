@@ -30,7 +30,7 @@
                     }
                 })
             },
-            goToMovie(id){
+            goToMovie(id) {
                 this.$router.push("/movie/" + id);
             }
         }
